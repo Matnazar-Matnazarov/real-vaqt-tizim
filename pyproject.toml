@@ -1,0 +1,25 @@
+[project]
+name = "real-vaqt-tizim"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "aiogram>=3.22.0",
+    "celery[redis]>=5.5.3",
+    "dash>=3.2.0",
+    "email-validator>=2.3.0",
+    "environs>=14.3.0",
+    "fastapi>=0.118.0",
+    "matplotlib>=3.10.6",
+    "numpy>=2.3.3",
+    "plotly[express]>=6.3.0",
+    "psutil>=7.1.0",
+    "python-multipart>=0.0.20",
+    "uvicorn>=0.37.0",
+]
+
+[tool.uv.workspace]
+members = [
+    "8_amaliyot",
+]

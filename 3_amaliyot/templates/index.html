@@ -1,0 +1,31 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8"/>
+  <title>Email yuborish - FastAPI</title>
+  <style>
+    body{font-family: Arial; max-width:700px;margin:40px auto;padding:20px}
+    input, textarea {width:100%; padding:8px; margin:6px 0}
+    button {padding:10px 16px}
+    .note {color:#666; font-size:0.9em}
+  </style>
+</head>
+<body>
+  <h2>Email yuborish (FastAPI)</h2>
+  <p class="note">Email va xabarni kiriting — yuborish SMTP orqali amalga oshadi.</p>
+
+  <form action="/send" method="post">
+    <label for="email">Qabul qiluvchi email:</label>
+    <input type="email" id="email" name="email" required placeholder="user@example.com"/>
+
+    <label for="subject">Mavzu (ixtiyoriy):</label>
+    <input type="text" id="subject" name="subject" placeholder="Mavzu">
+
+    <label for="message">Xabar:</label>
+    <textarea id="message" name="message" rows="8" required placeholder="Xabaringizni yozing..."></textarea>
+
+    <button type="submit">Yuborish</button>
+  </form>
+
+</body>
+</html>
