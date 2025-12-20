@@ -11,8 +11,10 @@ real-time-systems/
 ├── lesson_3/          # FastAPI email sender
 ├── lesson_4/          # Telegram bot
 ├── lesson_5/          # Celery cron task scheduler
+├── lesson_6/          # Real-time chat (Socket programming)
 ├── lesson_7/          # Log file monitoring (tail -f)
 ├── lesson_8/          # WebSocket real-time system metrics
+├── lesson_9/          # Arduino multitasking simulation
 ├── lesson_10/         # IoT sensor simulation dashboard
 ├── lesson_11/         # RTOS task scheduling simulation
 ├── requirements.txt   # Asosiy dependencies
@@ -25,6 +27,8 @@ real-time-systems/
 
 - Python 3.12+
 - pip yoki uv package manager
+- Redis (lesson_5 uchun)
+- Arduino IDE (lesson_9 uchun, ixtiyoriy)
 
 ### Qadamlar
 
@@ -110,19 +114,22 @@ Web interfeys orqali email yuborish tizimi. SMTP orqali email jo'natish va email
 - Background task processing
 - Jinja2 template engine
 - TLS/SSL xavfsizlik
+- **Uvicorn auto-start** - `python main.py` orqali avtomatik ishga tushadi
 
 **Ishga tushirish:**
 ```bash
 cd lesson_3
-# .env fayl yaratish kerak:
+# .env fayl yaratish kerak (yoki .env.example dan nusxa olish):
 # SMTP_HOST=smtp.gmail.com
 # SMTP_PORT=587
 # SMTP_USER=your_email@gmail.com
-# SMTP_PASS=your_password
+# SMTP_PASS=your_app_password
 # FROM_NAME=FastAPI Mailer
 # FROM_EMAIL=your_email@gmail.com
 
-uvicorn main:app --reload
+python main.py
+# Yoki an'anaviy usul:
+# uvicorn main:app --reload
 ```
 
 **Dependencies:**
@@ -149,7 +156,7 @@ Telegram bot yaratish va foydalanuvchi ma'lumotlarini olish.
 **Ishga tushirish:**
 ```bash
 cd lesson_4
-# .env fayl yaratish kerak:
+# .env fayl yaratish kerak (yoki .env.example dan nusxa olish):
 # BOT_TOKEN=your_telegram_bot_token
 
 python bot.py
@@ -192,6 +199,46 @@ python cron_task.py
 
 ---
 
+### Lesson 6: Real-Time Chat (Socket Programming)
+**Texnologiyalar:** Python, socket, threading
+
+Socket dasturlash orqali real vaqt chat tizimi. Server va mijoz arxitekturasi asosida bir nechta foydalanuvchi o'rtasida xabar almashish.
+
+**Xususiyatlar:**
+- Multi-client chat server
+- Real-time messaging
+- Threading orqali parallel ishlash
+- Nickname support
+- Thread-safe operations
+- Vaqt belgisi bilan xabarlar
+- Graceful disconnect handling
+- Interactive menu (main.py)
+
+**Ishga tushirish:**
+```bash
+cd lesson_6
+
+# 1. Server ishga tushirish (birinchi terminal):
+python server.py
+# Yoki
+python main.py  # Menu orqali tanlash
+
+# 2. Mijoz ishga tushirish (ikkinchi terminal):
+python client.py
+# Yoki
+python main.py  # Menu orqali tanlash
+```
+
+**Fayllar:**
+- `server.py` - Chat serveri (bir nechta mijozlarni qabul qiladi)
+- `client.py` - Chat mijoz dasturi
+- `main.py` - Interactive menu
+
+**Dependencies:**
+- Python standart kutubxonalar (socket, threading)
+
+---
+
 ### Lesson 7: Log File Monitoring
 **Texnologiyalar:** Python (standart kutubxonalar)
 
@@ -225,19 +272,61 @@ WebSocket orqali real vaqtda sistema metrikalarini (CPU, RAM, Network) yuborish.
 - System load average
 - FastAPI WebSocket endpoints
 - Jinja2 template rendering
+- **Uvicorn auto-start** - `python main.py` orqali avtomatik ishga tushadi
 
 **Ishga tushirish:**
 ```bash
 cd lesson_8
-uvicorn main:app --reload
+python main.py
+# Yoki an'anaviy usul:
+# uvicorn main:app --reload
+
 # Browserda: http://localhost:8000
 ```
+
+**Endpoints:**
+- `GET /` - Dashboard (HTML)
+- `GET /health` - Health check
+- `WebSocket /ws/metrics` - Real-time metrics stream
 
 **Dependencies:**
 - `fastapi` - Web framework
 - `uvicorn` - ASGI server
 - `psutil` - Sistema metrikalari
 - `jinja2` - Template engine
+
+---
+
+### Lesson 9: Arduino Multitasking Simulation
+**Texnologiyalar:** Arduino, C++
+
+Arduino mikrokontrollerida multitasking simulyatsiyasi. LED blinking va Serial output parallel ishlaydi.
+
+**Xususiyatlar:**
+- Non-blocking LED blinking
+- Non-blocking Serial output
+- `millis()` orqali vaqt boshqaruvi
+- Real-time task scheduling
+- Wokwi simulator bilan ishlaydi
+
+**Ishga tushirish:**
+```bash
+cd lesson_9
+# Arduino IDE da ochish:
+# 1. Arduino IDE ni oching
+# 2. sketch.ino faylini oching
+# 3. Board va Port ni tanlang
+# 4. Upload qiling
+
+# Yoki Wokwi simulator:
+# https://wokwi.com da ochish
+```
+
+**Fayllar:**
+- `sketch.ino` - Arduino sketch kodi
+
+**Dependencies:**
+- Arduino IDE yoki Wokwi simulator
 
 ---
 
@@ -265,7 +354,7 @@ python main.py
 ```
 
 **Chiqadigan fayllar:**
-- `sensor_malumotlari.csv` - Sensor ma'lumotlari
+- `sensor_malumotlari.csv` - Sensor ma'lumotlari (avtomatik yaratiladi)
 
 ---
 
@@ -307,7 +396,13 @@ python main.py
 
 ### Real-Time Communication
 - **WebSocket** - Real-time bidirectional communication
+- **Socket** - TCP/IP socket programming
+- **Threading** - Parallel task execution
 - **asyncio** - Asynchronous programming
+
+### Hardware va Embedded
+- **Arduino** - Mikrokontroller dasturlash
+- **Tkinter** - Desktop GUI framework
 
 ### Data Processing
 - **pandas** - Data analysis (agar kerak bo'lsa)
@@ -339,7 +434,7 @@ Asosiy dependencies:
 
 ## 🔧 Konfiguratsiya
 
-Ba'zi lessonlar `.env` fayl talab qiladi:
+Ba'zi lessonlar `.env` fayl talab qiladi. `.env.example` fayllar mavjud:
 
 ### Lesson 3 (Email Sender)
 ```env
@@ -351,10 +446,17 @@ FROM_NAME=FastAPI Mailer
 FROM_EMAIL=your_email@gmail.com
 ```
 
+**Eslatma:** Gmail uchun App Password yaratish kerak:
+1. Google Account → Security → 2-Step Verification
+2. App passwords → Generate new password
+3. Yaratilgan parolni `SMTP_PASS` ga yozing
+
 ### Lesson 4 (Telegram Bot)
 ```env
 BOT_TOKEN=your_telegram_bot_token
 ```
+
+**Eslatma:** Bot token olish uchun [@BotFather](https://t.me/BotFather) ga murojaat qiling.
 
 ### Lesson 5 (Celery)
 Redis server ishga tushirilgan bo'lishi kerak:
@@ -370,7 +472,16 @@ redis-server
 cd lesson_2 && python main.py
 
 # System metrics via WebSocket
-cd lesson_8 && uvicorn main:app --reload
+cd lesson_8 && python main.py
+```
+
+### Real-Time Communication
+```bash
+# Chat server (birinchi terminal)
+cd lesson_6 && python server.py
+
+# Chat client (ikkinchi terminal)
+cd lesson_6 && python client.py
 ```
 
 ### IoT va Sensorlar
@@ -386,6 +497,15 @@ cd lesson_11 && python main.py
 
 # Celery cron tasks
 cd lesson_5 && celery -A cron_task worker
+```
+
+### Web Services
+```bash
+# Email sender
+cd lesson_3 && python main.py
+
+# System metrics dashboard
+cd lesson_8 && python main.py
 ```
 
 ## 🏗️ Loyiha Arxitekturasi
@@ -408,11 +528,32 @@ Loyiha modulli tuzilishga ega, har bir lesson mustaqil ishlaydi:
 │  └──────────┘  └──────────┘        │
 │                                     │
 │  ┌──────────┐  ┌──────────┐        │
+│  │ Lesson 6 │  │ Lesson 8 │        │
+│  │   Chat   │  │ WebSocket│        │
+│  └──────────┘  └──────────┘        │
+│                                     │
+│  ┌──────────┐  ┌──────────┐        │
 │  │ Lesson 10│  │ Lesson 11│        │
 │  │   IoT    │  │   RTOS   │        │
 │  └──────────┘  └──────────┘        │
 └─────────────────────────────────────┘
 ```
+
+## 🎯 Darslar Ro'yxati
+
+| Lesson | Nom | Texnologiyalar | Status |
+|--------|-----|----------------|--------|
+| 1 | Timer va Count-Up | Python | ✅ |
+| 2 | CPU/RAM Monitoring | Python, Matplotlib, psutil | ✅ |
+| 3 | FastAPI Email Sender | FastAPI, SMTP | ✅ |
+| 4 | Telegram Bot | aiogram | ✅ |
+| 5 | Celery Cron Tasks | Celery, Redis | ✅ |
+| 6 | Real-Time Chat | Socket, Threading | ✅ |
+| 7 | Log File Monitoring | Python | ✅ |
+| 8 | WebSocket Metrics | FastAPI, WebSocket | ✅ |
+| 9 | Arduino Multitasking | Arduino, C++ | ✅ |
+| 10 | IoT Sensor Dashboard | Tkinter, CSV | ✅ |
+| 11 | RTOS Scheduling | Python, heapq | ✅ |
 
 ## 🤝 Yordam va Qo'llab-quvvatlash
 
@@ -432,20 +573,31 @@ Real vaqt tizimlari fanidan amaliy ishlar
 
 ## 🎯 Kelajakdagi Rejalar
 
-- [ ] Lesson 6 va 9 ni qo'shish
+- [x] Lesson 6 va 9 ni qo'shish
 - [ ] Docker containerization
 - [ ] CI/CD pipeline
 - [ ] Unit testlar qo'shish
 - [ ] API documentation (Swagger/OpenAPI)
 - [ ] Performance optimization
 - [ ] Real-time dashboard birlashtirish
+- [ ] More Arduino examples
+- [ ] MQTT integration for IoT
 
 ## 📊 Statistika
 
-- **Total Lessons:** 9
-- **Technologies:** 10+
-- **Lines of Code:** 1000+
+- **Total Lessons:** 11
+- **Technologies:** 15+
+- **Lines of Code:** 2000+
 - **Dependencies:** 90+
+- **Programming Languages:** Python, C++ (Arduino), HTML/CSS/JS
+
+## 🔗 Foydali Havolalar
+
+- [FastAPI Documentation](https://fastapi.tiangolo.com/)
+- [aiogram Documentation](https://docs.aiogram.dev/)
+- [Celery Documentation](https://docs.celeryq.dev/)
+- [Arduino Reference](https://www.arduino.cc/reference/)
+- [Socket Programming Guide](https://docs.python.org/3/library/socket.html)
 
 ---
 
